@@ -84,6 +84,6 @@ class RestaurantTest {
         items.add("Vegetable lasagne");
 
         int total = restaurant.getOrderTotal(items);
-        assertEquals(388, total);
+        assertEquals(119 + 269, total);
     }
 }
