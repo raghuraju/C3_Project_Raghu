@@ -6,6 +6,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -15,6 +17,7 @@ class RestaurantTest {
     static Restaurant restaurant;
     static Restaurant restaurantSpy;
     static int menuSize;
+    List<String> items;
     //REFACTOR ALL THE REPEATED LINES OF CODE
 
     @BeforeAll
@@ -29,6 +32,7 @@ class RestaurantTest {
     @BeforeEach
     public void size() {
         menuSize = restaurant.getMenu().size();
+        items = new ArrayList<>();
     }
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>OPEN/CLOSED<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -67,4 +71,19 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    @Test
+    public void should_return_zero_for_empty_order() {
+        int total = restaurant.getOrderTotal(items);
+        assertEquals(0, total);
+    }
+
+    @Test
+    public void should_return_correct_total_for_non_empty_order() {
+        items.add("Sweet corn soup");
+        items.add("Vegetable lasagne");
+
+        int total = restaurant.getOrderTotal(items);
+        assertEquals(388, total);
+    }
 }
